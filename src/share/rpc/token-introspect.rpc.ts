@@ -13,11 +13,14 @@ export class TokenIntrospectRPCClient implements ITokenIntrospect {
              axios.post(`${this.url}`, { token });
 
              
-            const {sub} = data.data;
+            const {role,sub} = data.data;
 
           
             return {
-                payload: {sub},
+                payload: {
+                    sub,
+                    role,
+                },
                 isOk: true,
             };
         } catch (error) {

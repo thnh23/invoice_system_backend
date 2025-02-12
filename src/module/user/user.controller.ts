@@ -7,6 +7,9 @@ import { ReqWithRequester} from 'src/share/interface';
 import { User } from './user.entity';
 import { ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiOperation } from '@nestjs/swagger';
 import { IntrospectDto } from 'src/share/token.dto';
+import { RolesGuard } from 'src/share/guard/roles';
+
+
 
 
 @Controller('users')
@@ -43,7 +46,7 @@ export class UserHttpController {
 
     @Patch('user/:id')
     @ApiBearerAuth('JWT')
-    @UseGuards(RemoteAuthGuard)
+    @UseGuards(RemoteAuthGuard, RolesGuard)
     @HttpCode(HttpStatus.OK)
     async updateUser(@Request() req: ReqWithRequester, @Param('id') id: string, @Body() dto: UserUpdateDTO) {
         const requester = req.requester;
@@ -54,7 +57,7 @@ export class UserHttpController {
 
     @Delete('user/:id')
     @ApiBearerAuth('JWT')
-    @UseGuards(RemoteAuthGuard)
+    @UseGuards(RemoteAuthGuard, RolesGuard)
     @HttpCode(HttpStatus.OK)
     async deleteUser(@Request() req: ReqWithRequester, @Param('id') id: string) {
         const requester = req.requester;

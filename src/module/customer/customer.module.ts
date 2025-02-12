@@ -1,10 +1,9 @@
-import { Module, Provider } from "@nestjs/common";
+import { MiddlewareConsumer, Module, Provider, RequestMethod } from "@nestjs/common";
 import { CustomerService } from "./customer.service";
 import { CUSTOMER_REPOSITORY, CUSTOMER_SERVICE } from "./customer.di-token";
 import { CustomerRepository } from "./customer.repo";
 import { Customer } from "./customer.entity";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { UsersModule } from "../user/user.module";
 import { CustomerHttpController } from "./customer.controller";
 import { USER_REPOSITORY } from "../user/user.di-token";
 import { UserRepository } from "../user/user.repo";
@@ -27,4 +26,6 @@ const repositories: Provider[] = [
     controllers: [CustomerHttpController],
   })
 
-export class CustomerModule{ }
+export class CustomerModule{ 
+
+}

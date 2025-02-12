@@ -1,45 +1,50 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsOptional, IsString, MinLength } from 'class-validator';
+import { IsEmail, IsMobilePhone, IsNotEmpty, IsOptional, IsPhoneNumber, IsString, Matches, MaxLength, MinLength } from 'class-validator';
+import { ErrEmailAtLeast5Chars, ErrPasswordAtLeast8Chars, ErrPasswordInvalid, ErrUsernameAtLeast3Chars, ErrUsernameAtMost25Chars, ErrUsernameInvalid } from './user.entity';
 
 
 export class UserRegistrationDTO {
   @ApiProperty()
-  @IsNotEmpty()
+  @MinLength(3, ErrUsernameAtLeast3Chars)
+  @MaxLength(25, ErrUsernameAtMost25Chars)
+  @IsString()
+  @Matches(/^[a-zA-Z0-9_]+$/, ErrUsernameInvalid)
   username: string;
 
-  @ApiProperty({
-    minLength: 8,
-  })
-  @IsNotEmpty()
-  @MinLength(8)
+  @ApiProperty()
+  @MinLength(8, ErrPasswordAtLeast8Chars)
+  @IsString()
+  @Matches(/((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&])[A-Za-z0-9@$!%*?&]+)+/g, ErrPasswordInvalid)
   password: string;
 
   @ApiProperty()
   @IsEmail()
+  @MinLength(5, ErrEmailAtLeast5Chars)
   email: string;
 
   @ApiProperty()
   @IsNotEmpty()
+  @IsString()
   full_name: string;
 
   @ApiProperty()
-  @IsNotEmpty()
+  @IsPhoneNumber('VN',{message: 'Phone number is invalid'})
   phone_number: string;
 
 }
 
 export class UserUpdateDTO {
-    @ApiProperty({
-        minLength: 8,
-    })
-    @IsOptional()
-    @IsString()
-    @MinLength(8)
+  @ApiProperty()
+  @IsOptional()
+  @MinLength(8, ErrPasswordAtLeast8Chars)
+  @IsString()
+  @Matches(/((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&])[A-Za-z0-9@$!%*?&]+)+/g, ErrPasswordInvalid)
     password?: string;
 
     @ApiProperty()
     @IsOptional()
     @IsEmail()
+    @MinLength(5, ErrEmailAtLeast5Chars)
     email?: string;
 
     @ApiProperty()
@@ -49,7 +54,7 @@ export class UserUpdateDTO {
 
     @ApiProperty()
     @IsOptional()
-    @IsString()
+    @IsPhoneNumber('VN',{message: 'Phone number is invalid'})
     phone_number?: string;
 }
 

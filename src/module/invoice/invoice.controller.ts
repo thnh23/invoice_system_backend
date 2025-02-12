@@ -1,7 +1,6 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Inject, Param, Patch, Post, Query, Request, UseGuards} from "@nestjs/common";
 import { IInvoiceRepository, IInvoiceService } from "./invoice.port";
 import { INVOICE_REPOSITORY, INVOICE_SERVICE } from "./invoice.di-token";
-import { CustomerService } from "../customer/customer.service";
 import { ReqWithRequester } from "src/share/interface";
 import { InvoiceCreateDTO, InvoiceUpdateDTO } from "./invoice.dto";
 import { RemoteAuthGuard } from "src/share/guard/auth";

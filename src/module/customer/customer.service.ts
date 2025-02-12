@@ -4,10 +4,10 @@ import { CustomerCreateDTO, CustomerUpdateDTO } from "./customer.dto";
 import { USER_REPOSITORY } from "../user/user.di-token";
 import { IUserRepository } from "../user/user.port";
 import { v7 } from "uuid";
-import { Requester } from "src/share/interface";
+import { Requester, UserRole } from "src/share/interface";
 import { CUSTOMER_REPOSITORY } from "./customer.di-token";
 import { ICustomerRepository, ICustomerService } from "./customer.port";
-import { AppError, ErrForbidden, ErrNotFound } from "src/share/app-error";
+import { AppError, ErrForbidden, ErrNotFound } from "../../share/app-error";
 
 @Injectable()
 export class CustomerService implements ICustomerService{
@@ -26,7 +26,7 @@ export class CustomerService implements ICustomerService{
            throw AppError.from(ErrNotFound, 400).withLog('User not found');
         }
 
-        if(requester.sub != user.id){
+        if(requester.role !== UserRole.ADMIN &&  requester.sub != user.id){
            throw AppError.from(ErrForbidden, 400);
         }
         const newId = v7();
@@ -49,7 +49,7 @@ export class CustomerService implements ICustomerService{
             throw AppError.from(ErrNotFound, 400).withLog('Customer not found');
         }
 
-        if(requester.sub != existed.user.id){
+        if(requester.role !== UserRole.ADMIN && requester.sub !== existed.user.id){
             throw AppError.from(ErrForbidden, 400);
         }
 
@@ -65,8 +65,7 @@ export class CustomerService implements ICustomerService{
         }
 
         
-
-        if(requester.sub != existed.user.id){
+        if(requester.role !== UserRole.ADMIN && requester.sub !== existed.user.id){
             throw AppError.from(ErrForbidden, 400);
         }
 

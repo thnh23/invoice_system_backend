@@ -1,6 +1,9 @@
 
+
+
 export interface TokenPayload{
     sub: string;
+    role: UserRole;
 }
 
 
@@ -13,6 +16,7 @@ export interface ReqWithRequesterOpt { requester?: Requester; }
 export interface ITokenProvider {
     generateToken(payload: TokenPayload): Promise<string>;
     verifyToken(token: string): Promise<TokenPayload | null>;
+    isTokenExpried(token: string): Promise<boolean>;
 }
 
 export type TokenIntrospectResult = {
@@ -23,4 +27,9 @@ export type TokenIntrospectResult = {
 
 export interface ITokenIntrospect{
     introspect(token: string): Promise<TokenIntrospectResult>;
+}
+
+export enum UserRole {
+    ADMIN = 'admin',
+    USER = 'user'
 }

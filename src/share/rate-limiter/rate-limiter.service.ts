@@ -72,7 +72,7 @@ export class RateLimiterService {
             const generatedUuid = uuid();
             const key = `rate-limit:${token}:${generatedUuid}`;
             await this.redisClient.set(key, weight, {
-                EX: 60 * 60 * 10
+                EX: 60 
             })
         }
         return {

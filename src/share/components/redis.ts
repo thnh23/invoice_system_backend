@@ -11,7 +11,7 @@ export class RedisService implements OnModuleDestroy {
 
     constructor(){
         this.client = redis.createClient({
-            url: 'redis://default:@localhost:6379',
+            url: process.env.REDIS_URL,
         });
 
         this.client.connect().catch((err) => console.log('Redis connection error:', err));

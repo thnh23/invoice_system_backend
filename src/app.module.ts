@@ -42,13 +42,13 @@ import { RateLimiterModule } from './share/rate-limiter/rate-limiter.module';
 })
 
 export class AppModule {
-   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(RateLimitMiddleware)
-    .forRoutes(
-      { path: 'customers', method: RequestMethod.ALL },
-      {path: 'invoices', method: RequestMethod.ALL},
-      {path: 'users', method: RequestMethod.ALL}
-    );
+  //  configure(consumer: MiddlewareConsumer) {
+  //   consumer.apply(RateLimitMiddleware)
+  //   .forRoutes(
+  //     { path: 'customers', method: RequestMethod.ALL },
+  //     {path: 'invoices', method: RequestMethod.ALL},
+  //     {path: 'users', method: RequestMethod.ALL}
+  //   );
 
-  }
+  // }
 }
